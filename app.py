@@ -9,6 +9,11 @@ from engine import PAIRS, classify_news, technical, label, news_summary
 
 st.set_page_config(page_title='USD Intelligence v2', page_icon='💵', layout='centered')
 st.markdown('''<style>.block-container{padding-top:1rem;padding-left:1rem;padding-right:1rem}div[data-testid="stMetric"]{background:#192331;border-radius:12px;padding:12px}div[data-testid="stMetric"] *{color:#f4f6fa!important} </style>''', unsafe_allow_html=True)
+@st.fragment(run_every="5m")
+def auto_refresh():
+    st.caption("🔄 Monitorizare automată activă")
+
+auto_refresh()
 st.title('💵 USD Intelligence Monitor 2.0')
 st.caption('Semnale automate din piață și titluri de știri · nu reprezintă prognoză certificată')
 
