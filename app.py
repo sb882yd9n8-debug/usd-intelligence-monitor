@@ -12,12 +12,12 @@ st.markdown('''<style>.block-container{padding-top:1rem;padding-left:1rem;paddin
 @st.fragment(run_every="5m")
 def auto_refresh():
     st.caption("🔄 Monitorizare automată activă")
-
+    st.rerun(scope="app")
 auto_refresh()
 st.title('💵 USD Intelligence Monitor 2.0')
 st.caption('Semnale automate din piață și titluri de știri · nu reprezintă prognoză certificată')
 
-@st.cache_data(ttl=900, show_spinner=False)
+@st.cache_data(ttl=300, show_spinner=False)
 def prices(symbol, period, interval):
     df = yf.download(symbol, period=period, interval=interval, auto_adjust=True, progress=False, threads=False)
     if df is None or df.empty: return pd.Series(dtype=float)
@@ -25,7 +25,7 @@ def prices(symbol, period, interval):
     if isinstance(c, pd.DataFrame): c = c.iloc[:,0]
     return pd.to_numeric(c, errors='coerce').dropna()
 
-@st.cache_data(ttl=1800, show_spinner=False)
+@st.cache_data(ttl=300, show_spinner=False)
 def news_feed(query):
     url = 'https://news.google.com/rss/search?q=' + quote(query + ' when:7d') + '&hl=en-US&gl=US&ceid=US:en'
     f = feedparser.parse(url)
